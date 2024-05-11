@@ -1,23 +1,24 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import QuestionPage from './questionPage/QuestionPage';
+import EndPage from './endPage/EndPage';
+import { background } from '../assets/0_index';
+import BeginPage from './beginPage/BeginPage';
 
 export const MainPage = () => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [result, setResult] = useState('');
 
   const renderPage = (thispage) => {
     switch (thispage) {
       case 0:
-        return;
-      // <BeginPage setPage={setPage} />;
+        return <BeginPage setPage={setPage} />;
       case 1:
         return (
           <QuestionPage setPage={setPage} setResult={setResult}></QuestionPage>
         );
       case 2:
-        return;
-      // <EndPage result={result}></EndPage>;
+        return <EndPage result={result} setPage={setPage} />;
       default:
         break;
     }
@@ -31,4 +32,5 @@ const Container = styled.div`
   max-width: 480px;
   margin: 0 auto;
   overflow: hidden;
+  background-image: url(${background});
 `;
