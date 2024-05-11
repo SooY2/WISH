@@ -1,8 +1,28 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, { useState } from 'react';
+import QuestionPage from './questionPage/QuestionPage';
 
 export const MainPage = () => {
-  return <Container>메인 뷰입니다</Container>;
+  const [page, setPage] = useState(1);
+  const [result, setResult] = useState('');
+
+  const renderPage = (thispage) => {
+    switch (thispage) {
+      case 0:
+        return;
+      // <BeginPage setPage={setPage} />;
+      case 1:
+        return (
+          <QuestionPage setPage={setPage} setResult={setResult}></QuestionPage>
+        );
+      case 2:
+        return;
+      // <EndPage result={result}></EndPage>;
+      default:
+        break;
+    }
+  };
+  return <Container>{renderPage(page)}</Container>;
 };
 
 const Container = styled.div`
@@ -11,5 +31,4 @@ const Container = styled.div`
   max-width: 480px;
   margin: 0 auto;
   overflow: hidden;
-  background: beige;
 `;
