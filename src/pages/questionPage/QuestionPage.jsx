@@ -1,12 +1,18 @@
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import { QUESTIONS } from '../../constants/questions';
-import { background_q } from '../../assets/0_index';
+import {
+  background_q,
+  background_q_1,
+  background_q_2,
+  button_q,
+} from '../../assets/0_index';
 import { bubble } from '../../assets/0_index';
 import { IcArrow } from '../../assets/svgs/0_index';
 
 const QuestionPage = ({ setPage, setResult }) => {
   const [step, setStep] = useState(0);
+  const [bg, setBg] = useState(background_q);
   const [checked, setChecked] = useState([
     '',
     '',
@@ -41,6 +47,11 @@ const QuestionPage = ({ setPage, setResult }) => {
       return newChecked;
     });
     setChoices(shuffleChoices(QUESTIONS[step].choices));
+
+    if (step >= 0 && step < 4) setBg(background_q);
+    else if (step < 8) setBg(background_q_1);
+    else if (step < 12) setBg(background_q_2);
+    else return;
   }, [step]);
 
   useEffect(() => {
@@ -48,7 +59,7 @@ const QuestionPage = ({ setPage, setResult }) => {
   }, [checked]);
 
   return (
-    <Container background={background_q}>
+    <Container $background={bg}>
       <header>
         <IcArrow />
       </header>
@@ -56,6 +67,16 @@ const QuestionPage = ({ setPage, setResult }) => {
         <Bubble src={bubble} />
         <QuestionText>{QUESTIONS[0].question}</QuestionText>
       </BubbleContainer>
+      <BtnContainer>
+        <BtnWrapper>
+          <Btn src={button_q} alt='버튼' />
+          <AnswerText>{QUESTIONS[0].choices[0].content}</AnswerText>
+        </BtnWrapper>
+        <BtnWrapper>
+          <Btn src={button_q} alt='버튼' />
+          <AnswerText>{QUESTIONS[0].choices[1].content}</AnswerText>
+        </BtnWrapper>
+      </BtnContainer>
     </Container>
   );
 };
@@ -65,8 +86,11 @@ export default QuestionPage;
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background-image: url(${background_q});
+  background-image: url(${(props) => props.$background});
   background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const BubbleContainer = styled.div`
@@ -80,11 +104,37 @@ const Bubble = styled.img`
   width: 95%;
 `;
 
-const QuestionText = styled.pre`
+const Text = styled.pre`
   position: absolute;
-  top: 2.5rem;
+
   font-size: 2rem;
   line-height: 2.5rem;
   text-align: center;
   color: #8a5300;
+`;
+
+const QuestionText = styled(Text)`
+  top: 2.5rem;
+`;
+
+const BtnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+`;
+
+const BtnWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const AnswerText = styled(Text)`
+  position: absolute;
+  font-size: 1.8rem;
+`;
+
+const Btn = styled.img`
+  width: 33rem;
 `;

@@ -4,7 +4,7 @@ export const QUESTIONS = [
      당신이 어버이날 받고 싶은 선물은?`,
     personality: 'TF',
     choices: [
-      { category: 'F', content: '자녀에게 받는 진심이 가득 담긴 손편지;' },
+      { category: 'F', content: '자녀에게 받는 진심이 가득 담긴 손편지' },
       { category: 'T', content: '현금이 두둑한 봉투' },
     ],
   },
