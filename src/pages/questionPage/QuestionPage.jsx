@@ -1,12 +1,20 @@
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import { QUESTIONS } from '../../constants/questions';
-import { background_q } from '../../assets/0_index';
+import {
+  background_q,
+  background_q_1,
+  background_q_2,
+  button_q,
+} from '../../assets/0_index';
 import { bubble } from '../../assets/0_index';
 import { IcArrow } from '../../assets/svgs/0_index';
+import { QUESTIONSIMGS } from '../../constants/questionIMGS';
+import { calcResult } from '../../utils/calcResult';
 
 const QuestionPage = ({ setPage, setResult }) => {
   const [step, setStep] = useState(0);
+  const [bg, setBg] = useState(background_q);
   const [checked, setChecked] = useState([
     '',
     '',
@@ -19,10 +27,7 @@ const QuestionPage = ({ setPage, setResult }) => {
     '',
     '',
     '',
-    '',
   ]);
-  const [choices, setChoices] = useState([]);
-  const [isActive, setIsActive] = useState(false);
 
   //질문 섞는 함수
   const shuffleChoices = (array) => {
@@ -34,39 +39,90 @@ const QuestionPage = ({ setPage, setResult }) => {
   };
 
   useEffect(() => {
-    setIsActive(false);
-    setChecked((prevChecked) => {
-      const newChecked = [...prevChecked];
-      newChecked[step] = ''; // 배열의 인덱스는 0부터 시작하기 때문에 3번째 요소의 인덱스는 2입니다.
-      return newChecked;
-    });
-    setChoices(shuffleChoices(QUESTIONS[step].choices));
+    if (step >= 0 && step < 4) setBg(background_q);
+    else if (step < 8) setBg(background_q_1);
+    else if (step < 12) setBg(background_q_2);
+    else return;
   }, [step]);
 
-  useEffect(() => {
-    if (checked[step] !== '') setIsActive(true);
-  }, [checked]);
-
   return (
-    <Container background={background_q}>
-      <header>
-        <IcArrow />
-      </header>
+    <Container $background={bg}>
+      <StIcArrow
+        onClick={() => {
+          step > 0 ? setStep(step - 1) : {};
+        }}
+      />
       <BubbleContainer>
         <Bubble src={bubble} />
-        <QuestionText>{QUESTIONS[0].question}</QuestionText>
+        <QuestionText>{QUESTIONS[step].question}</QuestionText>
       </BubbleContainer>
+      <StImage src={QUESTIONSIMGS[step]} />
+      <BtnContainer>
+        <BtnWrapper
+          onClick={(e) => {
+            e.preventDefault();
+            setChecked((prevChecked) => {
+              const newChecked = [...prevChecked];
+              newChecked[step] = QUESTIONS[step].choices[0].category; // 배열의 인덱스는 0부터 시작하기 때문에 3번째 요소의 인덱스는 2입니다.
+              return newChecked;
+            });
+            if (step === QUESTIONS.length - 1) {
+              setResult([...checked, QUESTIONS[step].choices[0].category]);
+              setPage(2);
+              return;
+            }
+            setStep(step + 1);
+          }}
+        >
+          <Btn src={button_q} alt='버튼' />
+          <AnswerText>{QUESTIONS[step].choices[0].content}</AnswerText>
+        </BtnWrapper>
+        <BtnWrapper
+          onClick={(e) => {
+            e.preventDefault();
+            setChecked((prevChecked) => {
+              const newChecked = [...prevChecked];
+              newChecked[step] = QUESTIONS[step].choices[1].category; // 배열의 인덱스는 0부터 시작하기 때문에 3번째 요소의 인덱스는 2입니다.
+              return newChecked;
+            });
+            if (step === QUESTIONS.length - 1) {
+              setResult([...checked, QUESTIONS[step].choices[0].category]);
+              setPage(2);
+              return;
+            }
+            setStep(step + 1);
+          }}
+        >
+          <Btn src={button_q} alt='버튼' />
+          <AnswerText>{QUESTIONS[step].choices[1].content}</AnswerText>
+        </BtnWrapper>
+      </BtnContainer>
+      <Footer>
+        <Text>{`남은 질문 : ${11 - step}`}</Text>
+      </Footer>
     </Container>
   );
 };
 
 export default QuestionPage;
 
+const StIcArrow = styled(IcArrow)`
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+`;
+
 const Container = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
-  background-image: url(${background_q});
+  padding: 5rem 0;
+  background-image: url(${(props) => props.$background});
   background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const BubbleContainer = styled.div`
@@ -80,11 +136,49 @@ const Bubble = styled.img`
   width: 95%;
 `;
 
-const QuestionText = styled.pre`
+const Text = styled.pre`
   position: absolute;
-  top: 2.5rem;
+
   font-size: 2rem;
   line-height: 2.5rem;
   text-align: center;
   color: #8a5300;
+`;
+
+const QuestionText = styled(Text)`
+  top: 2.5rem;
+`;
+
+const BtnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+`;
+
+const BtnWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const AnswerText = styled(Text)`
+  position: absolute;
+  font-size: 1.8rem;
+`;
+
+const Btn = styled.img`
+  width: 33rem;
+`;
+
+const Footer = styled.footer`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+`;
+
+const StImage = styled.img`
+  width: 95%;
+  max-width: 35rem;
 `;
