@@ -4,6 +4,7 @@ import QuestionPage from './questionPage/QuestionPage';
 import EndPage from './endPage/EndPage';
 import { background } from '../assets/0_index';
 import BeginPage from './beginPage/BeginPage';
+import AIPage2 from './aiPage/AIPage2';
 
 export const MainPage = () => {
   const [page, setPage] = useState(0);
@@ -19,6 +20,8 @@ export const MainPage = () => {
         );
       case 2:
         return <EndPage result={result} setPage={setPage} />;
+      case 3:
+        return <AIPage2 />;
       default:
         break;
     }

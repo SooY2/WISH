@@ -29,6 +29,9 @@ export const getSpeech = (text) => {
     //힌국어 voice가 있다면 ? utterance에 목소리를 설정한다 : 리턴하여 목소리가 나오지 않도록 한다.
     if (kor_voice) {
       utterThis.voice = kor_voice;
+      utterThis.pitch = 0.8; // 높이 조절
+      utterThis.rate = 1.0; // 속도 조절
+      utterThis.volume = 0.5; // 볼륨 조절
     } else {
       return;
     }
