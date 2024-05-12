@@ -38,6 +38,10 @@ const QuestionPage = ({ setPage, setResult }) => {
     return array;
   };
 
+  const stopSpeech = () => {
+    window.speechSynthesis.cancel();
+  };
+
   useEffect(() => {
     window.speechSynthesis.getVoices();
     getSpeech(QUESTIONS[step].question);
@@ -63,6 +67,7 @@ const QuestionPage = ({ setPage, setResult }) => {
         <BtnWrapper
           onClick={(e) => {
             e.preventDefault();
+            stopSpeech();
             setChecked((prevChecked) => {
               const newChecked = [...prevChecked];
               newChecked[step] = QUESTIONS[step].choices[0].category; // 배열의 인덱스는 0부터 시작하기 때문에 3번째 요소의 인덱스는 2입니다.
@@ -82,6 +87,7 @@ const QuestionPage = ({ setPage, setResult }) => {
         <BtnWrapper
           onClick={(e) => {
             e.preventDefault();
+            stopSpeech();
             setChecked((prevChecked) => {
               const newChecked = [...prevChecked];
               newChecked[step] = QUESTIONS[step].choices[1].category; // 배열의 인덱스는 0부터 시작하기 때문에 3번째 요소의 인덱스는 2입니다.
