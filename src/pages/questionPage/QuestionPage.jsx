@@ -10,7 +10,7 @@ import {
 import { bubble } from '../../assets/0_index';
 import { IcArrow } from '../../assets/svgs/0_index';
 import { QUESTIONSIMGS } from '../../constants/questionIMGS';
-import { calcResult } from '../../utils/calcResult';
+import { getSpeech } from '../../utils/getSpeech';
 
 const QuestionPage = ({ setPage, setResult }) => {
   const [step, setStep] = useState(0);
@@ -39,6 +39,8 @@ const QuestionPage = ({ setPage, setResult }) => {
   };
 
   useEffect(() => {
+    window.speechSynthesis.getVoices();
+    getSpeech(QUESTIONS[step].question);
     if (step >= 0 && step < 4) setBg(background_q);
     else if (step < 8) setBg(background_q_1);
     else if (step < 12) setBg(background_q_2);
