@@ -141,8 +141,8 @@ const Bubble = styled.img`
 const Text = styled.pre`
   position: absolute;
 
-  font-size: 2rem;
-  line-height: 2.5rem;
+  font-size: 2.5rem;
+  line-height: 3rem;
   text-align: center;
   color: #8a5300;
 `;
@@ -166,7 +166,7 @@ const BtnWrapper = styled.div`
 
 const AnswerText = styled(Text)`
   position: absolute;
-  font-size: 1.8rem;
+  font-size: 3rem;
 `;
 
 const Btn = styled.img`
@@ -182,5 +182,5 @@ const Footer = styled.footer`
 
 const StImage = styled.img`
   width: 95%;
-  max-width: 35rem;
+  max-width: 30rem;
 `;

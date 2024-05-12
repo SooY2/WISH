@@ -1,7 +1,7 @@
 export const QUESTIONS = [
   {
     question: `행복한 가정의 달 5월,
-       당신이 어버이날 받고 싶은 선물은?`,
+당신이 어버이날 받고 싶은 선물은?`,
     personality: 'TF',
     choices: [
       { category: 'F', content: '손편지' },
@@ -22,7 +22,7 @@ export const QUESTIONS = [
   },
   {
     question: `자녀들에게 줄 맛있는 김치를 담근 당신!
-        자녀가 집에 많다며 안받으려고 한다면?`,
+자녀가 집에 많다며 안받으려고 한다면?`,
     personality: 'TF',
     choices: [
       { category: 'F', content: '서운하다' },
